@@ -1,13 +1,14 @@
 ﻿using Foundation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UIKit;
 
 namespace MobileBrowser
 {
     public partial class ViewController : UIViewController
     {
-        int index = 0;
+        int indexOpenPage = 0;
         List<ItemListView> listPointer = null;
         public ViewController (IntPtr handle) : base (handle)
         {
@@ -22,15 +23,11 @@ namespace MobileBrowser
             ButtonAddURL.TouchUpInside += (object sender, EventArgs e) => {
                 if (TextBoxURL.Text != "")
                 {
-                    //ListURL.AddToListURL(TextBoxURL.Text);
-                    listPointer.Add(new ItemListView(TextBoxURL.Text,null));
+                    listPointer.Add(new ItemListView("https://" + TextBoxURL.Text,null));
+                    ListURL.AddToListOpenPage("https://" + TextBoxURL.Text);
                 }
-
                 UpdateListView();
-
-                OpenItem("https://" +TextBoxURL.Text, listPointer.Count-1);
-
-
+                OpenItem("https://" + TextBoxURL.Text, listPointer.Count-1);
             };
 
             ButtonMenu.TouchUpInside += (object sender, EventArgs e) => {
@@ -48,18 +45,44 @@ namespace MobileBrowser
             };
 
             Browser.LoadFinished += (object sender, EventArgs e) =>
-                listPointer[index].Value = Browser.Request.Url.ToString();
+                ListURL.UpdateListOpenPages(Browser.Request.Url.ToString(), indexOpenPage);
 
 
             ButtonCreateFolder.TouchUpInside += (object sender, EventArgs e) => {
-                //ListURL.AddToListFolder();
-                //listPointer = ListURL.GetList();
                 listPointer.Add(new ItemListView("folder",new List<ItemListView>()));
                 UpdateListView();
             };
 
             ButtonReturnOnStart.TouchUpInside += (object sender, EventArgs e) => {
                 listPointer = ListURL.GetList();
+                UpdateListView();
+            };
+
+        
+            ButtonInsets.TouchUpInside += (object sender, EventArgs e) => {
+                if (TableViewOpenPage.Hidden)
+                {
+                    TableViewOpenPage.Hidden = false;
+                    ButtonClose.Hidden = false;
+                }
+                else
+                {
+                    TableViewOpenPage.Hidden = true;
+                    ButtonClose.Hidden = true;
+                }
+            };
+
+            ButtonClose.TouchUpInside += (object sender, EventArgs e) => {
+                if (ListURL.GetListOpenPages().Count != 0) {
+                    ListURL.DeleteOpenPage(indexOpenPage);
+                }
+                UpdateListView();
+            
+            };
+
+            ButtonLoad.TouchUpInside += (object sender, EventArgs e) => {
+                ListURL.LoadList();
+                UpdateListView();
             };
 
         }
@@ -75,6 +98,10 @@ namespace MobileBrowser
             TableSource tableSource = new TableSource(listPointer);
             tableSource.onClick += OpenItem;
             TableView.Source = tableSource;
+
+            TableSourceOpenPages tableSourceOpenPage = new TableSourceOpenPages(ListURL.GetListOpenPages());
+            tableSourceOpenPage.onClickOpenPage += OpenSavedPage;
+            TableViewOpenPage.Source = tableSourceOpenPage;
         }
 
 
@@ -82,18 +109,29 @@ namespace MobileBrowser
         {
             if (listPointer[indexRow].List == null)
             {
-                index = indexRow;
                 var url = new NSUrl(site);
                 var request = new NSUrlRequest(url);
                 Browser.LoadRequest(request);
+
+                ListURL.AddToListOpenPage(site);
+                indexOpenPage = ListURL.GetListOpenPages().Count - 1;
             } else
             {
                 listPointer = listPointer[indexRow].List;
                 UpdateListView();
-                index = 0;
             }
 
         }
+
+        private void OpenSavedPage(string site, int indexRow)
+        {
+            var url = new NSUrl(site);
+            var request = new NSUrlRequest(url);
+            Browser.LoadRequest(request);
+            indexOpenPage = indexRow;
+        }
+
+
 
     }
 }

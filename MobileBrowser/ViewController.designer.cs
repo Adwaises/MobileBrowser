@@ -24,7 +24,19 @@ namespace MobileBrowser
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ButtonClose { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton ButtonCreateFolder { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ButtonInsets { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ButtonLoad { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -37,6 +49,10 @@ namespace MobileBrowser
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITableView TableView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableView TableViewOpenPage { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -54,9 +70,24 @@ namespace MobileBrowser
                 ButtonAddURL = null;
             }
 
+            if (ButtonClose != null) {
+                ButtonClose.Dispose ();
+                ButtonClose = null;
+            }
+
             if (ButtonCreateFolder != null) {
                 ButtonCreateFolder.Dispose ();
                 ButtonCreateFolder = null;
+            }
+
+            if (ButtonInsets != null) {
+                ButtonInsets.Dispose ();
+                ButtonInsets = null;
+            }
+
+            if (ButtonLoad != null) {
+                ButtonLoad.Dispose ();
+                ButtonLoad = null;
             }
 
             if (ButtonMenu != null) {
@@ -72,6 +103,11 @@ namespace MobileBrowser
             if (TableView != null) {
                 TableView.Dispose ();
                 TableView = null;
+            }
+
+            if (TableViewOpenPage != null) {
+                TableViewOpenPage.Dispose ();
+                TableViewOpenPage = null;
             }
 
             if (TextBoxURL != null) {

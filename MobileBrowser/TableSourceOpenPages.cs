@@ -8,16 +8,16 @@ using UIKit;
 
 namespace MobileBrowser
 {
-    public class TableSource : UITableViewSource
+    public class TableSourceOpenPages : UITableViewSource
     {
         public delegate void MethodContainer(string url, int index);
-        public event MethodContainer onClick;
+        public event MethodContainer onClickOpenPage;
 
-        private List<ItemListView> list;
+        private List<string> list;
 
-        public TableSource() { }
+        public TableSourceOpenPages() { }
 
-        public TableSource(List<ItemListView> list)
+        public TableSourceOpenPages(List<string> list)
         {
             this.list = list;
         }
@@ -25,7 +25,7 @@ namespace MobileBrowser
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = new UITableViewCell(UITableViewCellStyle.Default, "");
-            string item = list[indexPath.Row].Value;
+            string item = list[indexPath.Row];
             cell.TextLabel.Text = item;
             return cell;
         }
@@ -37,13 +37,12 @@ namespace MobileBrowser
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            string item = list[indexPath.Row].Value;
+            string item = list[indexPath.Row];
 
-            onClick(item,indexPath.Row);
+            onClickOpenPage(item, indexPath.Row);
 
-            UIAlertView alert = new UIAlertView("Page", item, null, "OK");
-            alert.Show();
+            //UIAlertView alert = new UIAlertView("Selected Item", item, null, "OK");
+            //alert.Show();
         }
-
     }
 }

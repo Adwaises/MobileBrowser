@@ -17,21 +17,35 @@ namespace MobileBrowser
             return listURL;
         }
 
-        //public static void AddToListURL(string url)
-        //{
-        //    listURL.Add(new ItemListView(url,null));
-        //}
+        public static void LoadList()
+        {
+            listURL.Add(new ItemListView("https://ya.ru",null));
+            listURL.Add(new ItemListView("https://mail.ru", null));
+            listURL.Add(new ItemListView("folder", new List<ItemListView>()));
+            listURL[2].List.Add(new ItemListView("https://google.ru", null));
+            listURL[2].List.Add(new ItemListView("https://facebook.com", null));
+        }
 
-        //public static void AddToListFolder()
-        //{
-        //    listURL.Add(new ItemListView("folder", new List<ItemListView>()));
-        //}
+        private static List<string> listOpenPage = new List<string>();
 
-        //public static void ReplaceItem(string url, int index)
-        //{
-        //    listURL[index].Value = url;
-        //}
+        public static void AddToListOpenPage(string url)
+        {
+            listOpenPage.Add(url);
+        }
 
+        public static List<string> GetListOpenPages()
+        {
+            return listOpenPage;
+        }
 
+        public static void UpdateListOpenPages(string url, int index)
+        {
+            listOpenPage[index] = url;
+        }
+
+        public static void DeleteOpenPage(int index)
+        {
+            listOpenPage.RemoveAt(index);
+        }
     }
 }
