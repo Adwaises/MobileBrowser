@@ -1,0 +1,12 @@
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\bin\iPhoneSimulator\Debug\MobileBrowser.exe
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\bin\iPhoneSimulator\Debug\MobileBrowser.pdb
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\ibtool\_BundleResourceWithLogicalName.items
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\actool\_PartialAppManifest.items
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\actool\_BundleResourceWithLogicalName.items
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\coremlc\_PartialAppManifest.items
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\coremlc\_BundleResourceWithLogicalName.items
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\optimized\
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\MobileBrowser.csproj.CoreCompileInputs.cache
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\MobileBrowser.exe
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\MobileBrowser.pdb
+E:\Visual Studio 2017\MobileBrowser\MobileBrowser\obj\iPhoneSimulator\Debug\MobileBrowser.csprojAssemblyReference.cache
