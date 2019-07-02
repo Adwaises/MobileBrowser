@@ -30,11 +30,11 @@ namespace MobileBrowser
         /// </summary>
         public static void LoadList()
         {
-            listURL.Add(new ItemListView("https://ya.ru",null));
-            listURL.Add(new ItemListView("https://mail.ru", null));
+            listURL.Add(new ItemListView("https://ya.ru/",null));
+            listURL.Add(new ItemListView("https://mail.ru/", null));
             listURL.Add(new ItemListView("folder", new List<ItemListView>()));
-            listURL[2].List.Add(new ItemListView("https://google.ru", null));
-            listURL[2].List.Add(new ItemListView("https://facebook.com", null));
+            listURL[listURL.Count-1].List.Add(new ItemListView("https://google.ru/", null));
+            listURL[listURL.Count-1].List.Add(new ItemListView("https://facebook.com/", null));
         }
 
         // список открытых вкладок

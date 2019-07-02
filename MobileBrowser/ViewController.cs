@@ -26,20 +26,20 @@ namespace MobileBrowser
             ButtonAddURL.TouchUpInside += (object sender, EventArgs e) => {
                 if (TextBoxURL.Text != "")
                 {
-                    if (!ListURL.GetList().Contains(new ItemListView("https://" + TextBoxURL.Text,null)))
+                    if (!ListURL.GetList().Select(o => o.Value).Contains("https://" + TextBoxURL.Text + "/"))
                     {
-                        listPointer.Add(new ItemListView("https://" + TextBoxURL.Text, null));
+                        listPointer.Add(new ItemListView("https://" + TextBoxURL.Text + "/", null));
                     }
 
-                    if (!ListURL.GetListOpenPages().Contains("https://" + TextBoxURL.Text)) {
-                        ListURL.AddToListOpenPage("https://" + TextBoxURL.Text);
+                    if (!ListURL.GetListOpenPages().Contains("https://" + TextBoxURL.Text + "/")) {
+                        ListURL.AddToListOpenPage("https://" + TextBoxURL.Text + "/");
                     } else
                     {
-                        indexOpenPage = ListURL.GetListOpenPages().FindIndex(o => o == "https://" + TextBoxURL.Text);
+                        indexOpenPage = ListURL.GetListOpenPages().FindIndex(o => o == "https://" + TextBoxURL.Text + "/");
                     }
                 }
                 UpdateListView();
-                OpenItem("https://" + TextBoxURL.Text, listPointer.Count-1);
+                OpenItem("https://" + TextBoxURL.Text + "/", listPointer.Count-1);
             };
 
             // привязка кнопки, которая делает иерархию ссылок и директорий видимой
@@ -49,6 +49,7 @@ namespace MobileBrowser
                     TableView.Hidden = false;
                     ButtonCreateFolder.Hidden = false;
                     ButtonReturnOnStart.Hidden = false;
+                    ViewForList.Hidden = false;
                 } else
                 {
                     MakeHiddenMenu();
@@ -73,10 +74,11 @@ namespace MobileBrowser
 
             // кнопка, которая делает видимым список открытых страниц (вкладки)
             ButtonInsets.TouchUpInside += (object sender, EventArgs e) => {
-                if (TableViewOpenPage.Hidden)
+                if (TableViewPages.Hidden)
                 {
-                    TableViewOpenPage.Hidden = false;
+                    TableViewPages.Hidden = false;
                     ButtonClose.Hidden = false;
+                    ViewForOpenPages.Hidden = false;
                 }
                 else
                 {
@@ -108,6 +110,7 @@ namespace MobileBrowser
             TableView.Hidden = true;
             ButtonCreateFolder.Hidden = true;
             ButtonReturnOnStart.Hidden = true;
+            ViewForList.Hidden = true;
         }
 
         /// <summary>
@@ -115,8 +118,9 @@ namespace MobileBrowser
         /// </summary>
         private void MakeHiddenOpenPages()
         {
-            TableViewOpenPage.Hidden = true;
+            TableViewPages.Hidden = true;
             ButtonClose.Hidden = true;
+            ViewForOpenPages.Hidden = true;
         }
 
         public override void DidReceiveMemoryWarning ()
@@ -138,7 +142,7 @@ namespace MobileBrowser
             //для второго TableView (с открытыми вкладками)
             TableSourceOpenPages tableSourceOpenPage = new TableSourceOpenPages(ListURL.GetListOpenPages());
             tableSourceOpenPage.onClickOpenPage += OpenSavedPage;
-            TableViewOpenPage.Source = tableSourceOpenPage;
+            TableViewPages.Source = tableSourceOpenPage;
         }
 
         /// <summary>
@@ -154,16 +158,15 @@ namespace MobileBrowser
                 var request = new NSUrlRequest(url);
                 Browser.LoadRequest(request);
 
-                if (!ListURL.GetListOpenPages().Contains("https://" + TextBoxURL.Text))
+                if (!ListURL.GetListOpenPages().Contains(site))
                 {
                     ListURL.AddToListOpenPage(site);
+                    indexOpenPage = ListURL.GetListOpenPages().Count - 1;
                 }
                 else
                 {
-                    indexOpenPage = ListURL.GetListOpenPages().FindIndex(o => o == "https://" + TextBoxURL.Text);
+                    indexOpenPage = ListURL.GetListOpenPages().FindIndex(o => o == "https://" + TextBoxURL.Text + "/");
                 }
-
-                indexOpenPage = ListURL.GetListOpenPages().Count - 1;
             } else
             {
                 listPointer = listPointer[indexRow].List;

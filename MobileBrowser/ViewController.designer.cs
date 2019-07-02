@@ -52,11 +52,19 @@ namespace MobileBrowser
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITableView TableViewOpenPage { get; set; }
+        UIKit.UITableView TableViewPages { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField TextBoxURL { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ViewForList { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ViewForOpenPages { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
@@ -105,14 +113,24 @@ namespace MobileBrowser
                 TableView = null;
             }
 
-            if (TableViewOpenPage != null) {
-                TableViewOpenPage.Dispose ();
-                TableViewOpenPage = null;
+            if (TableViewPages != null) {
+                TableViewPages.Dispose ();
+                TableViewPages = null;
             }
 
             if (TextBoxURL != null) {
                 TextBoxURL.Dispose ();
                 TextBoxURL = null;
+            }
+
+            if (ViewForList != null) {
+                ViewForList.Dispose ();
+                ViewForList = null;
+            }
+
+            if (ViewForOpenPages != null) {
+                ViewForOpenPages.Dispose ();
+                ViewForOpenPages = null;
             }
         }
     }
