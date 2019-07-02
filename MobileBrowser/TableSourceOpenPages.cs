@@ -8,6 +8,9 @@ using UIKit;
 
 namespace MobileBrowser
 {
+    /// <summary>
+    /// Класс, загружающий список с сайтами и директориями в TableView
+    /// </summary>
     public class TableSourceOpenPages : UITableViewSource
     {
         public delegate void MethodContainer(string url, int index);
@@ -22,6 +25,12 @@ namespace MobileBrowser
             this.list = list;
         }
 
+        /// <summary>
+        /// Создает ячейку
+        /// </summary>
+        /// <param name="tableView"></param>
+        /// <param name="indexPath"></param>
+        /// <returns></returns>
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = new UITableViewCell(UITableViewCellStyle.Default, "");
@@ -35,14 +44,15 @@ namespace MobileBrowser
             return list.Count;
         }
 
+        /// <summary>
+        /// Вызывается при нажатии на элемент и генерирует событие
+        /// </summary>
+        /// <param name="tableView"></param>
+        /// <param name="indexPath"></param>
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             string item = list[indexPath.Row];
-
             onClickOpenPage(item, indexPath.Row);
-
-            //UIAlertView alert = new UIAlertView("Selected Item", item, null, "OK");
-            //alert.Show();
         }
     }
 }
