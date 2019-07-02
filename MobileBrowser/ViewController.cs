@@ -31,15 +31,9 @@ namespace MobileBrowser
                         listPointer.Add(new ItemListView("https://" + TextBoxURL.Text + "/", null));
                     }
 
-                    if (!ListURL.GetListOpenPages().Contains("https://" + TextBoxURL.Text + "/")) {
-                        ListURL.AddToListOpenPage("https://" + TextBoxURL.Text + "/");
-                    } else
-                    {
-                        indexOpenPage = ListURL.GetListOpenPages().FindIndex(o => o == "https://" + TextBoxURL.Text + "/");
-                    }
+                    OpenItem("https://" + TextBoxURL.Text + "/", listPointer.Count - 1);
+                    UpdateListView();
                 }
-                UpdateListView();
-                OpenItem("https://" + TextBoxURL.Text + "/", listPointer.Count-1);
             };
 
             // привязка кнопки, которая делает иерархию ссылок и директорий видимой
@@ -158,6 +152,7 @@ namespace MobileBrowser
                 var request = new NSUrlRequest(url);
                 Browser.LoadRequest(request);
 
+                //добавление в список открытых страниц
                 if (!ListURL.GetListOpenPages().Contains(site))
                 {
                     ListURL.AddToListOpenPage(site);
