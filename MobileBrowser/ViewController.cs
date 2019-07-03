@@ -51,8 +51,12 @@ namespace MobileBrowser
             };
 
             // событие, которое обновляет ссылку на открытую страницу после открытия
-            Browser.LoadFinished += (object sender, EventArgs e) =>
-                ListURL.UpdateListOpenPages(Browser.Request.Url.ToString(), indexOpenPage);
+            Browser.LoadFinished += (object sender, EventArgs e) => {
+                if (Browser.Request.Url.ToString() != "about:blank")
+                {
+                    ListURL.UpdateListOpenPages(Browser.Request.Url.ToString(), indexOpenPage);
+                }
+            };
 
             //конпка создания директории
             ButtonCreateFolder.TouchUpInside += (object sender, EventArgs e) => {
@@ -82,10 +86,13 @@ namespace MobileBrowser
 
             // кнопка, которая закрывает открытую страницу
             ButtonClose.TouchUpInside += (object sender, EventArgs e) => {
-                if (ListURL.GetListOpenPages().Count != 0) {
+                if (ListURL.GetListOpenPages().Count != 0 && indexOpenPage >= 0) {
+                    new UIAlertView("Deleted page", ListURL.GetListOpenPages()[indexOpenPage], null, "OK").Show();
                     ListURL.DeleteOpenPage(indexOpenPage);
                 }
                 UpdateListView();
+                OpenPageInBrowser("about:blank");
+                indexOpenPage = -1;
             };
 
             // кнопка, заполняющая список сайтами и директориями
@@ -93,7 +100,6 @@ namespace MobileBrowser
                 ListURL.LoadList();
                 UpdateListView();
             };
-
         }
 
         /// <summary>
@@ -140,17 +146,17 @@ namespace MobileBrowser
         }
 
         /// <summary>
-        /// Метод, открывающий либо сайт, либо директорию
+        /// Метод, открывающий либо сайт, либо директорию (из первого списка)
         /// </summary>
         /// <param name="site"></param>
         /// <param name="indexRow"></param>
         private void OpenItem(string site, int indexRow)
         {
+            new UIAlertView("Open page", site, null, "OK").Show();
+
             if (listPointer[indexRow].List == null)
             {
-                var url = new NSUrl(site);
-                var request = new NSUrlRequest(url);
-                Browser.LoadRequest(request);
+                OpenPageInBrowser(site);
 
                 //добавление в список открытых страниц
                 if (!ListURL.GetListOpenPages().Contains(site))
@@ -171,17 +177,28 @@ namespace MobileBrowser
         }
 
         /// <summary>
-        /// Метод, открывающий уже открытую ранее вкладку
+        /// Метод, открывающий уже открытую ранее вкладку (из второго списка)
         /// </summary>
         /// <param name="site"></param>
         /// <param name="indexRow"></param>
         private void OpenSavedPage(string site, int indexRow)
         {
+            new UIAlertView("Open page", site, null, "OK").Show();
+
+            OpenPageInBrowser(site);
+            indexOpenPage = indexRow;
+            MakeHiddenOpenPages();
+        }
+
+        /// <summary>
+        /// Открывает страницу в браузере
+        /// </summary>
+        /// <param name="site"></param>
+        private void OpenPageInBrowser(string site)
+        {
             var url = new NSUrl(site);
             var request = new NSUrlRequest(url);
             Browser.LoadRequest(request);
-            indexOpenPage = indexRow;
-            MakeHiddenOpenPages();
         }
     }
 }

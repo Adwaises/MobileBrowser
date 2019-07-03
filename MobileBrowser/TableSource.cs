@@ -53,8 +53,6 @@ namespace MobileBrowser
         {
             string item = list[indexPath.Row].Value;
             onClick(item,indexPath.Row);
-            UIAlertView alert = new UIAlertView("Page", item, null, "OK");
-            alert.Show();
         }
 
     }
