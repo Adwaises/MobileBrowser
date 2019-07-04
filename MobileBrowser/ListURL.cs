@@ -26,7 +26,7 @@ namespace MobileBrowser
         }
 
         /// <summary>
-        /// Генерирует список сайтов и директорий
+        /// Заполняет список сайтов и директорий
         /// </summary>
         public static void LoadList()
         {

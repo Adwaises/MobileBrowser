@@ -13,12 +13,12 @@ namespace MobileBrowser
     /// </summary>
     public class TableSourceOpenPages : UITableViewSource
     {
+        // делегат и событие клика на элемент списка
         public delegate void MethodContainer(string url, int index);
         public event MethodContainer onClickOpenPage;
 
+        // список открытых страниц
         private List<string> list;
-
-        public TableSourceOpenPages() { }
 
         public TableSourceOpenPages(List<string> list)
         {
@@ -34,8 +34,7 @@ namespace MobileBrowser
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = new UITableViewCell(UITableViewCellStyle.Default, "");
-            string item = list[indexPath.Row];
-            cell.TextLabel.Text = item;
+            cell.TextLabel.Text = list[indexPath.Row];
             return cell;
         }
 
@@ -51,8 +50,7 @@ namespace MobileBrowser
         /// <param name="indexPath"></param>
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            string item = list[indexPath.Row];
-            onClickOpenPage(item, indexPath.Row);
+            onClickOpenPage(list[indexPath.Row], indexPath.Row);
         }
     }
 }

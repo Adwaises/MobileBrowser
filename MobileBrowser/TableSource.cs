@@ -13,12 +13,12 @@ namespace MobileBrowser
     /// </summary>
     public class TableSource : UITableViewSource
     {
+        // делегат и событие клика на элемент списка
         public delegate void MethodContainer(string url, int index);
         public event MethodContainer onClick;
 
+        // список страниц и директорий
         private List<ItemListView> list;
-
-        public TableSource() { }
 
         public TableSource(List<ItemListView> list)
         {
@@ -34,8 +34,7 @@ namespace MobileBrowser
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = new UITableViewCell(UITableViewCellStyle.Default, "");
-            string item = list[indexPath.Row].Value;
-            cell.TextLabel.Text = item;
+            cell.TextLabel.Text = list[indexPath.Row].Value;
             return cell;
         }
 
@@ -51,8 +50,7 @@ namespace MobileBrowser
         /// <param name="indexPath"></param>
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            string item = list[indexPath.Row].Value;
-            onClick(item,indexPath.Row);
+            onClick(list[indexPath.Row].Value, indexPath.Row);
         }
 
     }
